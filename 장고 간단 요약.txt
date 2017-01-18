@@ -1,0 +1,40 @@
+1. 항상 가상환경 가동하기 myvenv\Scripts\activate
+2. django-admin startproject name .   프로젝트 시작
+3. python manage.py migrate 해당 프로젝트에 DB생성 (기본 sqlite3)
+4. python manage.py runsurver 웹서버 가동
+5. python manage.py startapp name 내부 어플리케이션 생성
+6. settings.py 에 INSTALLED_APPS에 해당 어플리케이션 추가
+7. models.py에 선언하여 모델 생성
+8. 코드해석
+
+from django.db import models
+from django.utils import timezone
+//from 또는 import는 다른 파일에 있는 것을 추가한다.
+
+class Post(models.Model): // 모델을 정의 하는코드
+//class는 객체를 정의한다는 의미
+//Post는 모델의 이름 첫글자는 항상 대문자로 써야 한다.
+//(models.Model)은 Post가 장고 모델임을 의미 이 코드 때문에 장고는 Post가 데이터베이스에 저장됨을
+  안다.
+
+    //여기는 해당 모델의 속성 이다.
+    author = models.ForeignKey('auth.User') //다른 모델에 대한 링크
+    title = models.CharField(max_length=200) //글자수 제한(글의 제목)
+    text = models.TextField() //글자수에 제한이 없는 속성
+    created_date = models.DateTimeField(
+            default=timezone.now) //날짜와 시간을 의미한다.
+    published_date = models.DateTimeField(
+            blank=True, null=True)//날짜와 시간을 의미한다.
+
+    //함수 정의
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title //Post 모델의 제목 return
+
+9.DB 반영 python manage.py makemigrations blog 후
+          python manage.py migrate blog
+ + admin.py 에서 admin.site.register(Post) 추가로 admin 속성으로 관리 가능
+10. python manage.py createsuperuser 슈퍼유저생성
