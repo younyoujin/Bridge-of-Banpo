@@ -1,0 +1,7 @@
+<ul class="nav nav-pills nav-stacked">
+    <li><a href="http://localhost/index.php?id=create">프로젝트 생성하기</a></li>
+    <li><a href="http://localhost/index.php?id=myproject">내 작업목록</a></li>
+    <li>진행중인작업</li>
+    <li>내가 팀장인 작업</li>
+    <li>팀 캘린더</li>
+</ul>
